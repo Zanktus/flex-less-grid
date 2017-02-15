@@ -10,7 +10,7 @@ A LESS based flex grid with crossbrowser Mixins
 
 
 ### How to use
-The naming is based on Bootstrap 3 class names. You you can use something like:
+The naming is based on [Bootstrap 3](http://getbootstrap.com/css/#grid) class names. You you can use something like:
 ```
 <div class="row">
   <div class="col-sm-4">...</div>
@@ -35,5 +35,6 @@ The only additions are (## = Viewport):
 This project is licensed under the GNU General Public License - see the [LICENSE.md](LICENSE.md) file for details
 
 
-### Credits
-Coming soon...
+### Inspiration
+* [@kristoferjoseph](https://github.com/kristoferjoseph/flexboxgrid) - Grid used as a reference for the helper classes
+* [@jayj](https://gist.github.com/jayj/4012969) - For the cross-browser mixin basis
