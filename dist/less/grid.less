@@ -1,0 +1,77 @@
+// Import cross-browser mixins
+@import "flex";
+
+// Config (change if needed)
+@vp-size:  320px, 480px, 768px, 1024px, 1280px;
+@vp-name:  xs, sm, md, lg, xl;
+@vp-count: 5; // is needed, because most LESS compiler don't work with LESS-length
+@spacing:  15px;
+@cols:     12;
+
+.row {
+  .flex-display();
+  .flex(@columns: 0 1 auto);
+  .flex-wrap(@wrap: wrap);
+  margin-right: -@spacing;
+  margin-left: -@spacing;
+  &.reverse { .flex-direction(@direction: row-reverse); }
+}
+
+// Initial Alignments
+.grid-aligns(@vp, @i) when (@i = 1) {
+  [class*=col-@{vp}-] {
+    .flex(@columns: 0 0 auto);
+    padding-right: @spacing;
+    padding-left: @spacing;
+  }
+  .col-@{vp}-auto {
+    .flex-grow(@grow: 1);
+    .flex-basis(@width: 0);
+    max-width: 100%;
+  }
+  .col-@{vp}-offset-0 { margin-left: 0; }
+  .first-@{vp} { .flex-order(@order: -1); }
+  .last-@{vp} { .flex-order(@order: 1); }
+
+  // Alignment & Spacing Classes (Add on row):
+  .left-@{vp} {
+    .justify-content();
+    text-align: left;
+  }
+  .center-@{vp} {
+    .justify-content(@justify: center);
+    text-align: center;
+  }
+  .right-@{vp} {
+    .justify-content(@justify: flex-end);
+    text-align: right;
+  }
+  .top-@{vp} { .align-items(@align: flex-start); }
+  .middle-@{vp} { .align-items(@align: center); }
+  .bottom-@{vp} { .align-items(@align: flex-end); }
+  .around-@{vp} { .justify-content(@justify: space-around); }
+  .between-@{vp} { .justify-content(@justify: space-between); }
+}
+
+// Mixin for Viewport Col-Widths and Offsets
+.create-grid(@n, @vp, @i: 1) when (@i =< @n) {
+  .grid-aligns(@vp, @i);
+  .col-@{vp}-@{i} {
+    .flex-basis(@width: (@i * 100% / @n));
+    max-width: (@i * 100% / @n);
+  }
+  .col-@{vp}-offset-@{i} { margin-left: (@i * 100% / @n); }
+  .create-grid(@n, @vp, (@i + 1));
+}
+
+// Mixin to create all necessary Media-Queries (except the smallest)
+.create-grid(@cols, extract(@vp-name, 1));
+.create-media(@n: @vp-count, @i: 2) when (@i =< @n) {
+  @media screen and (min-width: extract(@vp-size, @i)) {
+    .create-grid(@cols, extract(@vp-name, @i));
+  }
+  .create-media(@n, (@i + 1));
+}
+
+// Create the Grid and Media-Queries
+.create-media();
