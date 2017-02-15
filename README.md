@@ -1,6 +1,8 @@
 # flex-less-grid
 ### Description
-A LESS based flex grid with crossbrowser Mixins
+A LESS based flex grid with cross-browser Mixins.
+
+This is not a framework, it just gives the opportunity to use and customize a flex based grid system.
 
 
 ### Installing
